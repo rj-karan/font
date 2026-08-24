@@ -2,6 +2,7 @@ import { Cloud } from 'lucide-react';
 import KPICard from '../components/common/KPICard';
 import IntegrationLogo from '../components/common/IntegrationLogo';
 import ProgressBar from '../components/common/ProgressBar';
+import { TOKENS } from '../utils/format';
 
 const CLOUD_ACCOUNTS = [
   { provider: 'aws', name: 'novapay-prod', resources: 312, misconfigs: 27, score: 68 },
@@ -19,10 +20,10 @@ const TOP_MISCONFIGS = [
 
 export default function CloudSecurity() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <div>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <Cloud size={22} color="var(--accent-blue)" /> Cloud Security
+    <div className="page-container page-stack">
+      <div className="animate-in">
+        <h1 className="page-title" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <Cloud size={22} color="var(--color-primary-blue)" /> Cloud Security
         </h1>
         <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
           Cloud security posture management (CSPM) across connected accounts
@@ -30,10 +31,10 @@ export default function CloudSecurity() {
       </div>
 
       <div className="responsive-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
-        <KPICard title="Cloud Resources" value="406" accentColor="#2563eb" icon={<Cloud size={16} />} />
-        <KPICard title="Misconfigurations" value="35" subtitle="2 critical, 13 high" accentColor="#ef4444" icon={<Cloud size={16} />} />
-        <KPICard title="Public Storage Buckets" value="1" subtitle="Requires immediate review" accentColor="#f97316" icon={<Cloud size={16} />} />
-        <KPICard title="Avg. Account Score" value="76" unit="/100" accentColor="#22c55e" icon={<Cloud size={16} />} />
+        <KPICard title="Cloud Resources" value="406" accentColor={TOKENS.primaryBlue} icon={<Cloud size={16} />} />
+        <KPICard title="Misconfigurations" value="35" subtitle="2 critical, 13 high" accentColor={TOKENS.critical} icon={<Cloud size={16} />} />
+        <KPICard title="Public Storage Buckets" value="1" subtitle="Requires immediate review" accentColor={TOKENS.sevHigh} icon={<Cloud size={16} />} />
+        <KPICard title="Avg. Account Score" value="76" unit="/100" accentColor={TOKENS.success} icon={<Cloud size={16} />} />
       </div>
 
       <div className="card">
@@ -47,18 +48,18 @@ export default function CloudSecurity() {
                 alignItems: 'center',
                 gap: 14,
                 padding: '12px 14px',
-                borderRadius: 8,
-                background: 'var(--bg-elevated)',
+                borderRadius: 'var(--radius-md)',
+                background: 'var(--color-bg-secondary)',
                 opacity: acc.resources === 0 ? 0.5 : 1,
               }}
             >
               <IntegrationLogo integrationKey={acc.provider} size={30} />
               <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.8125rem' }}>{acc.name}</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{acc.resources} resources · {acc.misconfigs} misconfigurations</div>
+                <div style={{ fontWeight: 500, color: 'var(--color-text-primary)', fontSize: '0.8125rem' }}>{acc.name}</div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)' }}>{acc.resources} resources · {acc.misconfigs} misconfigurations</div>
               </div>
               <div style={{ width: 140 }}>
-                <ProgressBar value={acc.score} color={acc.score >= 80 ? '#22c55e' : acc.score >= 60 ? '#f97316' : '#ef4444'} label="Score" />
+                <ProgressBar value={acc.score} color={acc.score >= 80 ? TOKENS.success : acc.score >= 60 ? TOKENS.sevHigh : TOKENS.critical} label="Score" />
               </div>
             </div>
           ))}

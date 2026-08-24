@@ -140,9 +140,12 @@ export default function DataTable<T>({
           <tbody>
             {pageRows.map((row) => {
               const id = getRowId(row);
+              const isSelected = selectable && !!selected?.has(id);
               return (
                 <tr
                   key={id}
+                  className={isSelected ? 'selected' : undefined}
+                  aria-selected={selectable ? isSelected : undefined}
                   onClick={() => onRowClick?.(row)}
                   tabIndex={onRowClick ? 0 : undefined}
                   role={onRowClick ? 'button' : undefined}

@@ -14,10 +14,10 @@ export default function AttackPaths() {
   const activePath = ATTACK_PATHS.find((p) => p.id === activePathId) ?? ATTACK_PATHS[0];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <div>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <Waypoints size={22} color="var(--accent-cyan)" /> Attack Paths
+    <div className="page-container page-stack">
+      <div className="animate-in">
+        <h1 className="page-title" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <Waypoints size={22} color="var(--color-primary-blue)" /> Attack Paths
         </h1>
         <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
           Trace exploitable routes from the internet to your most sensitive resources

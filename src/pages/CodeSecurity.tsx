@@ -11,6 +11,7 @@ import { REPOSITORIES, CODE_ISSUES } from '../demo/fixtures';
 import { CATEGORY_ICON } from '../config/icons';
 import { activateOnEnter } from '../utils/a11y';
 import type { CodeIssue } from '../types';
+import { TOKENS } from '../utils/format';
 
 const SDLC_SCORES = [
   { name: 'OpenSSF Source Code Management', score: 41 },
@@ -82,10 +83,10 @@ export default function CodeSecurity() {
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <div>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <Code2 size={22} color="var(--accent-blue)" /> Code & CI/CD Security
+    <div className="page-container page-stack">
+      <div className="animate-in">
+        <h1 className="page-title" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <Code2 size={22} color="var(--color-primary-blue)" /> Code & CI/CD Security
         </h1>
         <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
           Secure development posture across repositories, pipelines, and infrastructure-as-code
@@ -152,7 +153,7 @@ export default function CodeSecurity() {
 
         <div className="card">
           <div className="card-title">Code & CI/CD Issues Trend</div>
-          <RiskTrendChart data={CODE_TREND} height={160} color="#ef4444" />
+          <RiskTrendChart data={CODE_TREND} height={160} color={TOKENS.critical} />
         </div>
       </div>
 
@@ -178,7 +179,7 @@ export default function CodeSecurity() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             {SDLC_SCORES.map((s) => (
               <div key={s.name}>
-                <ProgressBar value={s.score} label={s.name} color={s.score >= 60 ? '#22c55e' : '#ef4444'} />
+                <ProgressBar value={s.score} label={s.name} color={s.score >= 60 ? TOKENS.success : TOKENS.critical} />
               </div>
             ))}
           </div>

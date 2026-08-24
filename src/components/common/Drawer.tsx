@@ -33,8 +33,8 @@ export default function Drawer({ open, onClose, title, subtitle, headerExtra, ta
       <div className="drawer-panel" role="dialog" aria-modal="true">
         <div className="drawer-header">
           <div style={{ minWidth: 0 }}>
-            <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.4 }}>{title}</div>
-            {subtitle && <div style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', marginTop: 4 }}>{subtitle}</div>}
+            <div style={{ fontSize: '1.0625rem', fontWeight: 500, color: 'var(--color-text-primary)', lineHeight: 1.4 }}>{title}</div>
+            {subtitle && <div style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', marginTop: 4 }}>{subtitle}</div>}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
             {headerExtra}
@@ -58,7 +58,11 @@ export default function Drawer({ open, onClose, title, subtitle, headerExtra, ta
             ))}
           </div>
         )}
-        <div className="drawer-body">{children}</div>
+        <div className="drawer-body">
+          <div key={activeTab ?? 'default'} className="tab-panel-enter">
+            {children}
+          </div>
+        </div>
         {footer && <div className="drawer-footer">{footer}</div>}
       </div>
     </>

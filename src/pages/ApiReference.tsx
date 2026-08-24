@@ -29,10 +29,10 @@ export default function ApiReference() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <div>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <TerminalIcon size={22} color="var(--accent-blue)" /> API Reference
+    <div className="page-container page-stack">
+      <div className="animate-in">
+        <h1 className="page-title" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <TerminalIcon size={22} color="var(--color-primary-blue)" /> API Reference
         </h1>
         <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
           Every UI action in CRISPR maps to one of these REST endpoints — the same abstraction layer used by the frontend.
@@ -74,8 +74,9 @@ export default function ApiReference() {
                       fontWeight: 700,
                       padding: '2px 8px',
                       borderRadius: 4,
-                      background: e.method === 'GET' ? 'rgba(37,99,235,0.15)' : 'rgba(34,197,94,0.15)',
-                      color: e.method === 'GET' ? 'var(--accent-blue)' : 'var(--sev-low)',
+                      background: e.method === 'GET' ? 'var(--color-light-blue)' : 'var(--color-bg)',
+                      border: e.method === 'GET' ? 'none' : '1px solid var(--color-success)',
+                      color: e.method === 'GET' ? 'var(--color-primary-blue)' : 'var(--color-success)',
                     }}
                   >
                     {e.method}

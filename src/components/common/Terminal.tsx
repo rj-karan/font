@@ -40,19 +40,19 @@ export default function Terminal({ height = 220, title = 'crispr — scan' }: Pr
           display: 'flex',
           alignItems: 'center',
           gap: 8,
-          background: '#161b22',
-          border: '1px solid var(--bg-border)',
-          borderBottom: 'none',
-          borderRadius: '8px 8px 0 0',
-          padding: '6px 12px',
+          background: 'var(--color-bg-secondary)',
+          border: '1px solid var(--color-border)',
+          borderBottom: '1px solid var(--color-divider)',
+          borderRadius: 'var(--radius-md) var(--radius-md) 0 0',
+          padding: '8px 14px',
         }}
       >
-        <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#ef4444' }} />
-        <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#eab308' }} />
-        <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#22c55e' }} />
-        <span style={{ marginLeft: 8, fontSize: '0.6875rem', color: 'var(--text-muted)', fontFamily: 'monospace' }}>{title}</span>
+        <span style={{ width: 8, height: 8, borderRadius: '50%', border: '1.5px solid var(--color-critical)' }} />
+        <span style={{ width: 8, height: 8, borderRadius: '50%', border: '1.5px solid var(--color-warning)' }} />
+        <span style={{ width: 8, height: 8, borderRadius: '50%', border: '1.5px solid var(--color-success)' }} />
+        <span style={{ marginLeft: 8, fontSize: '0.6875rem', color: 'var(--color-text-secondary)', fontFamily: 'monospace' }}>{title}</span>
       </div>
-      <div className="terminal-window" style={{ height, borderRadius: '0 0 8px 8px', borderTop: 'none' }}>
+      <div className="terminal-window" style={{ height, borderRadius: '0 0 var(--radius-md) var(--radius-md)', borderTop: 'none' }}>
         {lines.map((l) => (
           <div key={l.id} className={LINE_CLASS[l.kind]}>
             {l.text || '\u00A0'}

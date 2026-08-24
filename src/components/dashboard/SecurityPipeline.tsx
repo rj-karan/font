@@ -35,8 +35,8 @@ export default function SecurityPipeline() {
                 <Icon size={18} color={STATE_COLOR[stage.state]} style={stage.state === 'processing' ? { animation: 'spin-refresh 0.9s linear infinite' } : undefined} />
               </div>
               <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-primary)' }}>{stage.label}</div>
-                <div style={{ fontSize: '0.6875rem', color: 'var(--text-muted)' }}>{stage.itemCount} items</div>
+                <div style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--color-text-primary)' }}>{stage.label}</div>
+                <div style={{ fontSize: '0.6875rem', color: 'var(--color-text-muted)' }}>{stage.itemCount} items</div>
               </div>
               {!isLast && <div className={`pipeline-connector${isRunning && stage.state === 'processing' ? ' active' : ''}`} />}
             </div>

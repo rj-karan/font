@@ -3,14 +3,15 @@ import { Plug, RefreshCw, Settings2, Power, PlugZap } from 'lucide-react';
 import { INTEGRATIONS } from '../demo/fixtures';
 import IntegrationLogo from '../components/common/IntegrationLogo';
 import { toast } from '../lib/toastStore';
+import { TOKENS } from '../utils/format';
 import type { Integration, IntegrationStatus } from '../types';
 
 const STATUS_COLOR: Record<IntegrationStatus, string> = {
-  connected: '#22c55e',
-  disconnected: '#8b949e',
-  connecting: '#06b6d4',
-  error: '#ef4444',
-  syncing: '#2563eb',
+  connected: TOKENS.success,
+  disconnected: TOKENS.textMuted,
+  connecting: TOKENS.primaryBlue,
+  error: TOKENS.critical,
+  syncing: TOKENS.primaryBlue,
 };
 
 const STATUS_LABEL: Record<IntegrationStatus, string> = {
@@ -67,25 +68,25 @@ export default function Integrations() {
   const connectedCount = items.filter((i) => i.status === 'connected' || i.status === 'syncing').length;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <div>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <Plug size={22} color="var(--accent-blue)" /> Integrations
+    <div className="page-container page-stack">
+      <div className="animate-in">
+        <h1 className="page-title" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <Plug size={22} color="var(--color-primary-blue)" /> Integrations
         </h1>
-        <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
+        <p className="page-subtitle">
           {connectedCount} of {items.length} sources connected · manage ingestion across code, cloud, identity, and threat intelligence
         </p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
-        {items.map((integration) => (
-          <div key={integration.id} className="card">
+      <div className="responsive-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+        {items.map((integration, i) => (
+          <div key={integration.id} className="card animate-in" style={{ animationDelay: `${i * 30}ms` }}>
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 12 }}>
               <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
                 <IntegrationLogo integrationKey={integration.key} size={32} />
                 <div>
-                  <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--text-primary)' }}>{integration.name}</div>
-                  <div style={{ fontSize: '0.6875rem', color: 'var(--text-subtle)', textTransform: 'capitalize' }}>{integration.category.replace('_', ' ')}</div>
+                  <div style={{ fontWeight: 500, fontSize: '0.875rem', color: 'var(--color-text-primary)' }}>{integration.name}</div>
+                  <div style={{ fontSize: '0.6875rem', color: 'var(--color-text-muted)', textTransform: 'capitalize' }}>{integration.category.replace('_', ' ')}</div>
                 </div>
               </div>
               <span
@@ -94,20 +95,29 @@ export default function Integrations() {
                   alignItems: 'center',
                   gap: 5,
                   fontSize: '0.6875rem',
-                  fontWeight: 700,
+                  fontWeight: 600,
                   color: STATUS_COLOR[integration.status],
+                  transition: 'color var(--motion-base) var(--ease-standard)',
                 }}
               >
-                <span style={{ width: 6, height: 6, borderRadius: '50%', background: STATUS_COLOR[integration.status] }} />
+                <span
+                  style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: '50%',
+                    background: STATUS_COLOR[integration.status],
+                    transition: 'background var(--motion-base) var(--ease-standard)',
+                  }}
+                />
                 {STATUS_LABEL[integration.status]}
               </span>
             </div>
 
-            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', minHeight: 36, lineHeight: 1.5 }}>{integration.description}</p>
+            <p style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)', minHeight: 36, lineHeight: 1.5 }}>{integration.description}</p>
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.6875rem', color: 'var(--text-subtle)', marginBottom: 12 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.6875rem', color: 'var(--color-text-muted)', marginBottom: 12 }}>
               <span>{integration.itemsIngested} items ingested</span>
-              {integration.errors > 0 && <span style={{ color: 'var(--sev-medium)' }}>{integration.errors} error(s)</span>}
+              {integration.errors > 0 && <span style={{ color: 'var(--color-warning)' }}>{integration.errors} error(s)</span>}
               {integration.lastSync && <span>Synced {new Date(integration.lastSync).toLocaleTimeString()}</span>}
             </div>
 
