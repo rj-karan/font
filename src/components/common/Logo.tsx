@@ -1,51 +1,41 @@
+import { CrisprMark } from '../../assets/branding/CrisprMark';
+import { BRAND } from '../../config/branding';
+
 interface Props {
   size?: number;
   withWordmark?: boolean;
   wordmarkSize?: number;
+  mono?: boolean;
+}
+
+/** Re-exported for any code that still imports the old name. */
+export function ShieldMark({ size = 22, mono = false }: { size?: number; mono?: boolean }) {
+  return <CrisprMark size={size} mono={mono} />;
 }
 
 /**
- * CRISPR product mark — a hand-drawn SVG shield with a scan/pulse motif.
- * Used in the sidebar, favicon fallback, and dashboard header. Centralizing
- * it here means the brand mark is defined exactly once.
+ * CRISPR wordmark + mark. Renders through the centralized brand assets
+ * (src/assets/branding, src/config/branding.ts) so every usage — sidebar,
+ * top bar, command palette, loading states, demo pages — stays visually
+ * identical without duplicating markup.
  */
-export function ShieldMark({ size = 22 }: { size?: number }) {
+export default function Logo({ size = 22, withWordmark = true, wordmarkSize = 16, mono = false }: Props) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M12 2L4 5V11.5C4 16.2 7.2 20.4 12 22C16.8 20.4 20 16.2 20 11.5V5L12 2Z"
-        fill="url(#crispr-shield-grad)"
-        stroke="#2563eb"
-        strokeWidth="1"
-      />
-      <path d="M8.5 12.2L11 14.7L15.7 9.3" stroke="#f0f6fc" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-      <defs>
-        <linearGradient id="crispr-shield-grad" x1="4" y1="2" x2="20" y2="22" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#2563eb" />
-          <stop offset="100%" stopColor="#06b6d4" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
-
-export default function Logo({ size = 22, withWordmark = true, wordmarkSize = 18 }: Props) {
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-      <ShieldMark size={size} />
+    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+      <CrisprMark size={size} mono={mono} />
       {withWordmark && (
         <span
           style={{
-            fontWeight: 800,
+            fontWeight: 500,
             fontSize: wordmarkSize,
-            color: 'var(--text-primary)',
+            color: mono ? '#ffffff' : 'var(--color-text-primary)',
             letterSpacing: '-0.01em',
             whiteSpace: 'nowrap',
+            fontFamily: "'Google Sans Text', Inter, system-ui, sans-serif",
           }}
           className="nav-label"
         >
-          CRISPR
-          <span style={{ color: 'var(--accent-blue)' }}>.</span>
+          {BRAND.name}
         </span>
       )}
     </div>

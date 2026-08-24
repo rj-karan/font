@@ -6,6 +6,7 @@ import SeverityBadge from '../components/common/SeverityBadge';
 import KPICard from '../components/common/KPICard';
 import OpenPrModal from '../components/codesecurity/OpenPrModal';
 import EmptyState from '../components/common/EmptyState';
+import { TOKENS } from '../utils/format';
 
 const TABS = ['Overview', 'Findings', 'Dependencies', 'Secrets', 'IaC', 'Commits', 'Scans'];
 
@@ -44,28 +45,28 @@ export default function RepositoryDetail() {
   const ProviderIcon = repo.provider === 'gitlab' ? Gitlab : Github;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <button className="btn-secondary" style={{ width: 'fit-content', display: 'flex', alignItems: 'center', gap: 6 }} onClick={() => navigate('/code-security')}>
+    <div className="page-container page-stack">
+      <button className="btn-secondary animate-in" style={{ width: 'fit-content', display: 'flex', alignItems: 'center', gap: 6 }} onClick={() => navigate('/code-security')}>
         <ArrowLeft size={14} /> Back to Code Security
       </button>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-        <div style={{ width: 44, height: 44, borderRadius: 10, background: 'var(--bg-elevated)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <ProviderIcon size={22} color="var(--text-muted)" />
+      <div className="animate-in" style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+        <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'var(--color-bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <ProviderIcon size={22} color="var(--color-text-secondary)" />
         </div>
         <div>
-          <div style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'monospace' }}>{repo.name}</div>
-          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+          <div style={{ fontSize: '1.25rem', fontWeight: 500, color: 'var(--color-text-primary)', fontFamily: 'monospace' }}>{repo.name}</div>
+          <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)' }}>
             {repo.provider} · {repo.defaultBranch} · Last scan {new Date(repo.lastScan).toLocaleString()} · Owner: {repo.owners.map((o) => o.name).join(', ')}
           </div>
         </div>
       </div>
 
       <div className="responsive-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
-        <KPICard title="Security Score" value={repo.securityScore} unit="/100" accentColor={repo.securityScore >= 70 ? '#22c55e' : repo.securityScore >= 50 ? '#f97316' : '#ef4444'} icon={<ShieldAlert size={16} />} />
-        <KPICard title="Critical Issues" value={repo.criticalIssues} accentColor="#ef4444" icon={<ShieldAlert size={16} />} />
-        <KPICard title="Open Vulnerabilities" value={repo.openVulnerabilities} accentColor="#f97316" icon={<ShieldAlert size={16} />} />
-        <KPICard title="Secrets Detected" value={repo.secrets} accentColor="#7c3aed" icon={<ShieldAlert size={16} />} />
+        <KPICard title="Security Score" value={repo.securityScore} unit="/100" accentColor={repo.securityScore >= 70 ? TOKENS.success : repo.securityScore >= 50 ? TOKENS.sevHigh : TOKENS.critical} icon={<ShieldAlert size={16} />} />
+        <KPICard title="Critical Issues" value={repo.criticalIssues} accentColor={TOKENS.critical} icon={<ShieldAlert size={16} />} />
+        <KPICard title="Open Vulnerabilities" value={repo.openVulnerabilities} accentColor={TOKENS.sevHigh} icon={<ShieldAlert size={16} />} />
+        <KPICard title="Secrets Detected" value={repo.secrets} accentColor={TOKENS.warning} icon={<ShieldAlert size={16} />} />
       </div>
 
       <div className="card">
@@ -112,7 +113,7 @@ export default function RepositoryDetail() {
                 {(['critical', 'high', 'medium', 'low'] as const).map((k) => (
                   <div key={k} style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <SeverityBadge severity={k.toUpperCase()} />
-                    <span style={{ fontWeight: 700 }}>{repo.issues[k]}</span>
+                    <span style={{ fontWeight: 600 }}>{repo.issues[k]}</span>
                   </div>
                 ))}
               </div>
@@ -172,8 +173,8 @@ export default function RepositoryDetail() {
                     <SeverityBadge severity={f.severity} />
                   </td>
                   <td>{f.component}</td>
-                  <td style={{ color: 'var(--text-muted)' }}>{f.version}</td>
-                  <td style={{ color: 'var(--sev-low)' }}>{f.fixedVersion}</td>
+                  <td style={{ color: 'var(--color-text-secondary)' }}>{f.version}</td>
+                  <td style={{ color: 'var(--color-success)' }}>{f.fixedVersion}</td>
                   <td>
                     <button className="btn-secondary" style={{ padding: '4px 10px', fontSize: '0.6875rem' }} onClick={() => setPrOpen(true)}>
                       Open PR
@@ -255,12 +256,12 @@ export default function RepositoryDetail() {
         {tab === 'Commits' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {MOCK_COMMITS.map((c) => (
-              <div key={c.sha} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 10px', borderRadius: 6, background: 'var(--bg-elevated)' }}>
-                <GitCommit size={14} color="var(--text-muted)" />
-                <span style={{ fontFamily: 'monospace', fontSize: '0.75rem', color: 'var(--accent-cyan)' }}>{c.sha}</span>
+              <div key={c.sha} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 10px', borderRadius: 'var(--radius-sm)', background: 'var(--color-bg-secondary)' }}>
+                <GitCommit size={14} color="var(--color-text-secondary)" />
+                <span style={{ fontFamily: 'monospace', fontSize: '0.75rem', color: 'var(--color-primary-blue)' }}>{c.sha}</span>
                 <span style={{ flex: 1, fontSize: '0.8125rem' }}>{c.message}</span>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{c.author}</span>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-subtle)' }}>{c.date}</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)' }}>{c.author}</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>{c.date}</span>
               </div>
             ))}
           </div>
@@ -269,9 +270,9 @@ export default function RepositoryDetail() {
         {tab === 'Scans' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {['SAST', 'SCA', 'Secrets', 'IaC'].map((scanType) => (
-              <div key={scanType} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 12px', borderRadius: 6, background: 'var(--bg-elevated)' }}>
-                <span style={{ fontSize: '0.8125rem', fontWeight: 600 }}>{scanType} Scan</span>
-                <span style={{ fontSize: '0.75rem', color: 'var(--sev-low)', fontWeight: 700 }}>Completed · {new Date(repo.lastScan).toLocaleDateString()}</span>
+              <div key={scanType} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 12px', borderRadius: 'var(--radius-sm)', background: 'var(--color-bg-secondary)' }}>
+                <span style={{ fontSize: '0.8125rem', fontWeight: 500 }}>{scanType} Scan</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--color-success)', fontWeight: 600 }}>Completed · {new Date(repo.lastScan).toLocaleDateString()}</span>
               </div>
             ))}
           </div>

@@ -11,16 +11,18 @@ const IDENTITY_RISKS = [
   { identity: 'svc-auth-legacy', type: 'Service Account', privilege: 'IAM PassRole', mfa: false, risk: 'HIGH' },
 ];
 
-const RISK_COLOR: Record<string, string> = { CRITICAL: '#ef4444', HIGH: '#f97316', MEDIUM: '#eab308', LOW: '#22c55e' };
+import { TOKENS } from '../utils/format';
+
+const RISK_COLOR: Record<string, string> = { CRITICAL: TOKENS.critical, HIGH: TOKENS.sevHigh, MEDIUM: TOKENS.warning, LOW: TOKENS.success };
 
 export default function IdentitySecurity() {
   const avgMfa = Math.round(MOCK_ASSETS.reduce((a, x) => a + (x.controls?.mfa_pct ?? 0), 0) / MOCK_ASSETS.length);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <div>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <UserCog size={22} color="var(--accent-blue)" /> Identity Security
+    <div className="page-container page-stack">
+      <div className="animate-in">
+        <h1 className="page-title" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <UserCog size={22} color="var(--color-primary-blue)" /> Identity Security
         </h1>
         <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
           Privileged access review, MFA coverage, and over-privileged identity detection
@@ -28,10 +30,10 @@ export default function IdentitySecurity() {
       </div>
 
       <div className="responsive-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
-        <KPICard title="Tracked Identities" value="248" accentColor="#2563eb" icon={<UserCog size={16} />} />
-        <KPICard title="Avg. MFA Coverage" value={`${avgMfa}%`} accentColor={avgMfa >= 70 ? '#22c55e' : '#f97316'} icon={<UserCog size={16} />} />
-        <KPICard title="Over-Privileged Accounts" value="8" subtitle="Admin rights not required" accentColor="#ef4444" icon={<UserCog size={16} />} />
-        <KPICard title="Stale Credentials" value="14" subtitle="Unused for 90+ days" accentColor="#eab308" icon={<UserCog size={16} />} />
+        <KPICard title="Tracked Identities" value="248" accentColor={TOKENS.primaryBlue} icon={<UserCog size={16} />} />
+        <KPICard title="Avg. MFA Coverage" value={`${avgMfa}%`} accentColor={avgMfa >= 70 ? TOKENS.success : TOKENS.sevHigh} icon={<UserCog size={16} />} />
+        <KPICard title="Over-Privileged Accounts" value="8" subtitle="Admin rights not required" accentColor={TOKENS.critical} icon={<UserCog size={16} />} />
+        <KPICard title="Stale Credentials" value="14" subtitle="Unused for 90+ days" accentColor={TOKENS.warning} icon={<UserCog size={16} />} />
       </div>
 
       <div className="card">
@@ -66,7 +68,7 @@ export default function IdentitySecurity() {
         <div className="card-title">MFA Coverage by Asset</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {MOCK_ASSETS.map((a) => (
-            <ProgressBar key={a.asset_id} value={a.controls?.mfa_pct ?? 0} color={(a.controls?.mfa_pct ?? 0) >= 70 ? '#22c55e' : '#ef4444'} label={a.name} />
+            <ProgressBar key={a.asset_id} value={a.controls?.mfa_pct ?? 0} color={(a.controls?.mfa_pct ?? 0) >= 70 ? TOKENS.success : TOKENS.critical} label={a.name} />
           ))}
         </div>
       </div>

@@ -81,7 +81,17 @@ export default function FindingDetailDrawer({ finding, correlatedRiskCase, open,
             </div>
             <div>
               <div style={{ color: 'var(--text-muted)', fontSize: '0.6875rem', marginBottom: 4 }}>Source</div>
-              <span style={{ fontSize: '0.6875rem', fontWeight: 700, padding: '2px 8px', borderRadius: 4, background: `${sourceColor(finding.source_type)}20`, color: sourceColor(finding.source_type) }}>
+              <span
+                style={{
+                  fontSize: '0.6875rem',
+                  fontWeight: 700,
+                  padding: '2px 8px',
+                  borderRadius: 4,
+                  background: 'var(--color-bg)',
+                  border: `1px solid ${sourceColor(finding.source_type)}`,
+                  color: sourceColor(finding.source_type),
+                }}
+              >
                 {sourceLabel(finding.source_type)}
               </span>
             </div>
@@ -96,11 +106,11 @@ export default function FindingDetailDrawer({ finding, correlatedRiskCase, open,
           </div>
           <div>
             <div style={{ color: 'var(--text-muted)', fontSize: '0.6875rem', marginBottom: 6 }}>Confidence</div>
-            <ProgressBar value={Math.round(finding.confidence * 100)} color="#06b6d4" />
+            <ProgressBar value={Math.round(finding.confidence * 100)} color="var(--color-secondary-blue)" />
           </div>
           {correlatedRiskCase && (
-            <div style={{ padding: 12, borderRadius: 8, background: 'rgba(6,182,212,0.08)', border: '1px solid rgba(6,182,212,0.25)' }}>
-              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent-cyan)', marginBottom: 4 }}>Part of a correlated risk case</div>
+            <div style={{ padding: 12, borderRadius: 8, background: 'var(--color-blue-surface)', border: '1px solid var(--color-light-blue)' }}>
+              <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-primary-blue)', marginBottom: 4 }}>Part of a correlated risk case</div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                 {correlatedRiskCase.asset_name} — risk score {correlatedRiskCase.risk_score}, corroborated by {correlatedRiskCase.sources.length} independent
                 sources.

@@ -4,7 +4,7 @@ import { REMEDIATION_SCENARIOS } from '../demo/fixtures';
 import SeverityBadge from '../components/common/SeverityBadge';
 import KPICard from '../components/common/KPICard';
 import OpenPrModal from '../components/codesecurity/OpenPrModal';
-import { formatRupees } from '../utils/format';
+import { formatRupees, TOKENS } from '../utils/format';
 import { toast } from '../lib/toastStore';
 import type { RemediationScenario, ScenarioStatus } from '../types';
 
@@ -16,10 +16,10 @@ const STATUS_LABEL: Record<ScenarioStatus, string> = {
 };
 
 const STATUS_COLOR: Record<ScenarioStatus, string> = {
-  NOT_STARTED: '#8b949e',
-  IN_PROGRESS: '#06b6d4',
-  PR_OPENED: '#2563eb',
-  RESOLVED: '#22c55e',
+  NOT_STARTED: TOKENS.textMuted,
+  IN_PROGRESS: TOKENS.secondaryBlue,
+  PR_OPENED: TOKENS.primaryBlue,
+  RESOLVED: TOKENS.success,
 };
 
 export default function RemediationQueue() {
@@ -43,10 +43,10 @@ export default function RemediationQueue() {
   const totalRiskReduction = scenarios.filter((s) => s.status !== 'RESOLVED').reduce((a, s) => a + s.riskReductionInr, 0);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <div>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <Inbox size={22} color="var(--accent-blue)" /> Remediation Queue
+    <div className="page-container page-stack">
+      <div className="animate-in">
+        <h1 className="page-title" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <Inbox size={22} color="var(--color-primary-blue)" /> Remediation Queue
         </h1>
         <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
           Track and action remediation work end-to-end, from assignment to resolution
@@ -54,10 +54,10 @@ export default function RemediationQueue() {
       </div>
 
       <div className="responsive-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
-        <KPICard title="Open Items" value={scenarios.filter((s) => s.status !== 'RESOLVED').length} accentColor="#f97316" icon={<Inbox size={16} />} />
-        <KPICard title="In Progress" value={scenarios.filter((s) => s.status === 'IN_PROGRESS').length} accentColor="#06b6d4" icon={<Inbox size={16} />} />
-        <KPICard title="Resolved" value={scenarios.filter((s) => s.status === 'RESOLVED').length} accentColor="#22c55e" icon={<CheckCircle2 size={16} />} />
-        <KPICard title="Pending Risk Reduction" value={formatRupees(totalRiskReduction)} accentColor="#ef4444" icon={<Inbox size={16} />} />
+        <KPICard title="Open Items" value={scenarios.filter((s) => s.status !== 'RESOLVED').length} accentColor={TOKENS.sevHigh} icon={<Inbox size={16} />} />
+        <KPICard title="In Progress" value={scenarios.filter((s) => s.status === 'IN_PROGRESS').length} accentColor={TOKENS.secondaryBlue} icon={<Inbox size={16} />} />
+        <KPICard title="Resolved" value={scenarios.filter((s) => s.status === 'RESOLVED').length} accentColor={TOKENS.success} icon={<CheckCircle2 size={16} />} />
+        <KPICard title="Pending Risk Reduction" value={formatRupees(totalRiskReduction)} accentColor={TOKENS.critical} icon={<Inbox size={16} />} />
       </div>
 
       <div className="card">

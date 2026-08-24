@@ -6,6 +6,7 @@ import SeverityBadge from '../components/common/SeverityBadge';
 import KPICard from '../components/common/KPICard';
 import { getVulnerabilities } from '../lib/api';
 import type { Vulnerability } from '../types';
+import { TOKENS } from '../utils/format';
 import { SkeletonTable } from '../components/common/Skeleton';
 import { toast } from '../lib/toastStore';
 
@@ -67,10 +68,10 @@ export default function Vulnerabilities() {
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <div>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <Bug size={22} color="var(--sev-critical)" /> Vulnerabilities
+    <div className="page-container page-stack">
+      <div className="animate-in">
+        <h1 className="page-title" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <Bug size={22} color="var(--color-critical)" /> Vulnerabilities
         </h1>
         <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
           CVE-level vulnerability inventory correlated across scanners and threat intelligence
@@ -78,10 +79,10 @@ export default function Vulnerabilities() {
       </div>
 
       <div className="responsive-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
-        <KPICard title="Total Vulnerabilities" value={String(vulns?.length ?? 0)} icon={<Bug size={16} />} accentColor="#ef4444" />
-        <KPICard title="Critical" value={String(critical)} subtitle="Require immediate action" accentColor="#ef4444" icon={<Bug size={16} />} />
-        <KPICard title="Exploited in the Wild" value={String(exploitable)} subtitle="Active exploitation observed" accentColor="#f97316" icon={<Bug size={16} />} />
-        <KPICard title="Patch Coverage" value="100%" subtitle="All CVEs have a vendor patch" accentColor="#22c55e" icon={<Bug size={16} />} />
+        <KPICard title="Total Vulnerabilities" value={String(vulns?.length ?? 0)} icon={<Bug size={16} />} accentColor={TOKENS.critical} />
+        <KPICard title="Critical" value={String(critical)} subtitle="Require immediate action" accentColor={TOKENS.critical} icon={<Bug size={16} />} />
+        <KPICard title="Exploited in the Wild" value={String(exploitable)} subtitle="Active exploitation observed" accentColor={TOKENS.sevHigh} icon={<Bug size={16} />} />
+        <KPICard title="Patch Coverage" value="100%" subtitle="All CVEs have a vendor patch" accentColor={TOKENS.success} icon={<Bug size={16} />} />
       </div>
 
       <div className="card">

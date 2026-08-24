@@ -6,6 +6,7 @@ import SeverityBadge from '../components/common/SeverityBadge';
 import KPICard from '../components/common/KPICard';
 import { CODE_ISSUES } from '../demo/fixtures';
 import { toast } from '../lib/toastStore';
+import { TOKENS } from '../utils/format';
 
 const SECRET_ISSUES = CODE_ISSUES.filter((c) => c.category === 'secrets');
 
@@ -43,10 +44,10 @@ export default function Secrets() {
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <div>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <KeyRound size={22} color="var(--accent-violet)" /> Secrets Scanning
+    <div className="page-container page-stack">
+      <div className="animate-in">
+        <h1 className="page-title" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <KeyRound size={22} color="var(--color-primary-blue)" /> Secrets Scanning
         </h1>
         <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
           Hardcoded credentials, API keys, and tokens detected across source code and CI/CD
@@ -54,10 +55,10 @@ export default function Secrets() {
       </div>
 
       <div className="responsive-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
-        <KPICard title="Exposed Secrets" value={String(SECRET_ISSUES.reduce((a, i) => a + i.issues, 0))} accentColor="#7c3aed" icon={<KeyRound size={16} />} />
-        <KPICard title="Repositories Affected" value={String(new Set(SECRET_ISSUES.map((i) => i.repository)).size)} accentColor="#f97316" icon={<KeyRound size={16} />} />
-        <KPICard title="Active Cloud Keys" value="1" subtitle="With production permissions" accentColor="#ef4444" icon={<KeyRound size={16} />} />
-        <KPICard title="Avg. Time to Rotate" value="3.2" unit="days" accentColor="#06b6d4" icon={<KeyRound size={16} />} />
+        <KPICard title="Exposed Secrets" value={String(SECRET_ISSUES.reduce((a, i) => a + i.issues, 0))} accentColor={TOKENS.warning} icon={<KeyRound size={16} />} />
+        <KPICard title="Repositories Affected" value={String(new Set(SECRET_ISSUES.map((i) => i.repository)).size)} accentColor={TOKENS.sevHigh} icon={<KeyRound size={16} />} />
+        <KPICard title="Active Cloud Keys" value="1" subtitle="With production permissions" accentColor={TOKENS.critical} icon={<KeyRound size={16} />} />
+        <KPICard title="Avg. Time to Rotate" value="3.2" unit="days" accentColor={TOKENS.secondaryBlue} icon={<KeyRound size={16} />} />
       </div>
 
       <div className="card">

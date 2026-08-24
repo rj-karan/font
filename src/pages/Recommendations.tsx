@@ -13,10 +13,10 @@ export default function Recommendations() {
   const active = REMEDIATION_SCENARIOS.filter((s) => !dismissed.has(s.id)).sort((a, b) => b.riskReductionInr - a.riskReductionInr);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <div>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <ListChecks size={22} color="var(--accent-blue)" /> Recommendations
+    <div className="page-container page-stack">
+      <div className="animate-in">
+        <h1 className="page-title" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <ListChecks size={22} color="var(--color-primary-blue)" /> Recommendations
         </h1>
         <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
           Prioritized remediation guidance ranked by risk reduction and effort

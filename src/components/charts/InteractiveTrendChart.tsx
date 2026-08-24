@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { TOKENS } from '../../utils/format';
 
 export interface TrendSeriesDef {
   key: string;
@@ -56,9 +57,9 @@ export default function InteractiveTrendChart({ data, xKey, series, height = 240
               className="chip"
               onClick={() => toggle(s.key)}
               style={{
-                borderColor: enabled.has(s.key) ? s.color : 'var(--bg-border)',
-                color: enabled.has(s.key) ? 'var(--text-primary)' : 'var(--text-subtle)',
-                opacity: enabled.has(s.key) ? 1 : 0.5,
+                borderColor: enabled.has(s.key) ? s.color : TOKENS.border,
+                color: enabled.has(s.key) ? TOKENS.textPrimary : TOKENS.textMuted,
+                opacity: enabled.has(s.key) ? 1 : 0.55,
               }}
             >
               <span style={{ width: 8, height: 8, borderRadius: '50%', background: s.color, display: 'inline-block' }} />
@@ -67,20 +68,21 @@ export default function InteractiveTrendChart({ data, xKey, series, height = 240
           ))}
         </div>
         {onRangeChange && (
-          <div style={{ display: 'flex', gap: 2, background: 'var(--bg-elevated)', borderRadius: 6, padding: 2 }}>
+          <div style={{ display: 'flex', gap: 2, background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-sm)', padding: 2 }}>
             {ranges.map((r) => (
               <button
                 key={r.id}
                 onClick={() => onRangeChange(r.id)}
                 style={{
                   border: 'none',
-                  background: activeRange === r.id ? 'var(--accent-blue)' : 'transparent',
-                  color: activeRange === r.id ? '#fff' : 'var(--text-muted)',
+                  background: activeRange === r.id ? TOKENS.primaryBlue : 'transparent',
+                  color: activeRange === r.id ? '#fff' : TOKENS.textSecondary,
                   borderRadius: 5,
-                  padding: '4px 8px',
-                  fontSize: '0.6875rem',
-                  fontWeight: 600,
+                  padding: '4px 10px',
+                  fontSize: '0.75rem',
+                  fontWeight: 500,
                   cursor: 'pointer',
+                  transition: 'background 120ms ease',
                 }}
               >
                 {r.label}
@@ -91,12 +93,12 @@ export default function InteractiveTrendChart({ data, xKey, series, height = 240
       </div>
       <ResponsiveContainer width="100%" height={height}>
         <LineChart data={data} margin={{ top: 4, right: 16, left: 8, bottom: 4 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#30363d" />
-          <XAxis dataKey={xKey} tick={{ fill: '#8b949e', fontSize: 11 }} axisLine={false} tickLine={false} />
-          <YAxis tick={{ fill: '#8b949e', fontSize: 11 }} axisLine={false} tickLine={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke={TOKENS.divider} vertical={false} />
+          <XAxis dataKey={xKey} tick={{ fill: TOKENS.textMuted, fontSize: 11 }} axisLine={false} tickLine={false} />
+          <YAxis tick={{ fill: TOKENS.textMuted, fontSize: 11 }} axisLine={false} tickLine={false} />
           <Tooltip
-            contentStyle={{ background: '#161b22', border: '1px solid #30363d', borderRadius: 6, color: '#f0f6fc' }}
-            cursor={{ stroke: '#484f58', strokeDasharray: '3 3' }}
+            contentStyle={{ background: TOKENS.bg, border: `1px solid ${TOKENS.border}`, borderRadius: 8, color: TOKENS.textPrimary, boxShadow: '0 2px 6px rgba(60,64,67,0.15)' }}
+            cursor={{ stroke: TOKENS.border, strokeDasharray: '3 3' }}
           />
           <Legend wrapperStyle={{ display: 'none' }} />
           {visibleSeries.map((s) => (
@@ -107,7 +109,7 @@ export default function InteractiveTrendChart({ data, xKey, series, height = 240
               name={s.label}
               stroke={s.color}
               strokeWidth={2}
-              dot={{ r: 3, fill: s.color }}
+              dot={{ r: 3, fill: s.color, strokeWidth: 0 }}
               activeDot={{ r: 5 }}
               isAnimationActive
               animationDuration={500}

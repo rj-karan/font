@@ -54,12 +54,13 @@ function FileTree({ nodes, activeFile, onSelect, depth = 0 }: { nodes: DemoFileN
 }
 
 function highlightPython(code: string): string {
+  // Syntax colors draw exclusively from the strict CRISPR palette.
   return code
     .replace(/</g, '&lt;')
-    .replace(/(#.*$)/gm, '<span style="color:#8b949e">$1</span>')
-    .replace(/\b(def|class|import|from|return|if|for|in|else|max|min)\b/g, '<span style="color:#f97316">$1</span>')
-    .replace(/("""[\s\S]*?""")/g, '<span style="color:#22c55e">$1</span>')
-    .replace(/\b(\d+\.\d+|\d+)\b/g, '<span style="color:#06b6d4">$1</span>');
+    .replace(/(#.*$)/gm, '<span style="color:#5f6368">$1</span>')
+    .replace(/\b(def|class|import|from|return|if|for|in|else|max|min)\b/g, '<span style="color:#d93025">$1</span>')
+    .replace(/("""[\s\S]*?""")/g, '<span style="color:#188038">$1</span>')
+    .replace(/\b(\d+\.\d+|\d+)\b/g, '<span style="color:#1a73e8">$1</span>');
 }
 
 export default function VSCodeDemo() {
@@ -80,10 +81,10 @@ export default function VSCodeDemo() {
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, height: 'calc(100vh - 120px)' }}>
+    <div className="page-container animate-in" style={{ display: 'flex', flexDirection: 'column', gap: 16, height: 'calc(100vh - 120px)' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h1 style={{ fontSize: '1.25rem', fontWeight: 700, margin: 0, color: 'var(--text-primary)' }}>Developer Security Workspace</h1>
+          <h1 className="section-title">Developer Security Workspace</h1>
           <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
             A live view into how CRISPR ingests, correlates, and scores this repository
           </p>

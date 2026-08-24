@@ -78,15 +78,15 @@ export default function RiskCaseDrawer({ riskCase, open, onClose }: Props) {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
             <div className="card" style={{ padding: 12 }}>
               <div style={{ fontSize: '0.625rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Expected Annual Loss</div>
-              <div style={{ fontSize: '1.25rem', fontWeight: 800, color: riskColor(riskCase.risk_score) }}>{formatLakh(riskCase.eal_lakh)}</div>
+              <div style={{ fontSize: '1.25rem', fontWeight: 500, color: riskColor(riskCase.risk_score) }}>{formatLakh(riskCase.eal_lakh)}</div>
             </div>
             <div className="card" style={{ padding: 12 }}>
               <div style={{ fontSize: '0.625rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Likelihood</div>
-              <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>{Math.round(riskCase.likelihood * 100)}%</div>
+              <div style={{ fontSize: '1.25rem', fontWeight: 500, color: 'var(--text-primary)' }}>{Math.round(riskCase.likelihood * 100)}%</div>
             </div>
             <div className="card" style={{ padding: 12 }}>
               <div style={{ fontSize: '0.625rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Confidence</div>
-              <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>{riskCase.confidence_pct}%</div>
+              <div style={{ fontSize: '1.25rem', fontWeight: 500, color: 'var(--text-primary)' }}>{riskCase.confidence_pct}%</div>
             </div>
           </div>
 
@@ -105,7 +105,7 @@ export default function RiskCaseDrawer({ riskCase, open, onClose }: Props) {
               {riskCase.risk_drivers.map((d, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '0.8125rem' }}>
                   {d.direction === 'up' ? <ArrowUp size={13} color="var(--sev-critical)" /> : <ArrowDown size={13} color="var(--sev-low)" />}
-                  <span style={{ fontWeight: 700, color: d.direction === 'up' ? 'var(--sev-critical)' : 'var(--sev-low)', width: 36 }}>
+                  <span style={{ fontWeight: 600, color: d.direction === 'up' ? 'var(--sev-critical)' : 'var(--sev-low)', width: 36 }}>
                     {d.points > 0 ? '+' : ''}
                     {d.points}
                   </span>

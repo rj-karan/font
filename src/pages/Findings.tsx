@@ -85,7 +85,17 @@ export default function Findings() {
       header: 'Source',
       sortValue: (f) => f.source_type,
       render: (f) => (
-        <span style={{ fontSize: '0.6875rem', fontWeight: 700, padding: '2px 8px', borderRadius: 4, background: `${sourceColor(f.source_type)}20`, color: sourceColor(f.source_type) }}>
+        <span
+          style={{
+            fontSize: '0.6875rem',
+            fontWeight: 700,
+            padding: '2px 8px',
+            borderRadius: 4,
+            background: 'var(--color-bg)',
+            border: `1px solid ${sourceColor(f.source_type)}`,
+            color: sourceColor(f.source_type),
+          }}
+        >
           {sourceLabel(f.source_type)}
         </span>
       ),
@@ -108,13 +118,11 @@ export default function Findings() {
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+    <div className="page-container page-stack">
+      <div className="animate-in" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, color: 'var(--text-primary)' }}>Findings Explorer</h1>
-          <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
-            All raw findings correlated across every connected source
-          </p>
+          <h1 className="page-title">Findings Explorer</h1>
+          <p className="page-subtitle">All raw findings correlated across every connected source</p>
         </div>
         <button className="btn-secondary" style={{ display: 'flex', alignItems: 'center', gap: 6 }} onClick={() => toast.success('Export started', 'findings.csv')}>
           <Download size={14} /> Export

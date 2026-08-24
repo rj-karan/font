@@ -6,7 +6,7 @@ import SeverityBadge from '../components/common/SeverityBadge';
 import FilterBar from '../components/common/FilterBar';
 import { getAssets, getRisks, getFindings } from '../services/api';
 import { MOCK_ASSETS, MOCK_RISKS, MOCK_FINDINGS } from '../utils/mock';
-import { formatRupees, riskColor } from '../utils/format';
+import { formatRupees, riskColor, TOKENS } from '../utils/format';
 
 const TYPE_LABELS: Record<string, string> = {
   api_gateway: 'API Gateway',
@@ -48,9 +48,9 @@ export default function Assets() {
   );
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <div>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, color: 'var(--text-primary)' }}>Asset Inventory</h1>
+    <div className="page-container page-stack">
+      <div className="animate-in">
+        <h1 className="page-title">Asset Inventory</h1>
         <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
           Business-context-enriched inventory of NovaPay's critical assets
         </p>
@@ -108,11 +108,11 @@ export default function Assets() {
                     <span
                       style={{
                         fontSize: '0.6875rem',
-                        fontWeight: 700,
+                        fontWeight: 600,
                         padding: '2px 8px',
                         borderRadius: 4,
-                        background: 'rgba(37,99,235,0.15)',
-                        color: 'var(--accent-blue)',
+                        background: 'var(--color-light-blue)',
+                        color: 'var(--color-primary-blue)',
                       }}
                     >
                       {TYPE_LABELS[a.type] ?? a.type}
@@ -141,8 +141,8 @@ export default function Assets() {
                     alignItems: 'flex-start',
                     gap: 6,
                     fontSize: '0.75rem',
-                    color: 'var(--sev-medium)',
-                    background: 'rgba(234,179,8,0.1)',
+                    color: 'var(--color-warning)',
+                    background: 'var(--color-warning-surface)',
                     padding: '8px 10px',
                     borderRadius: 6,
                   }}
@@ -159,7 +159,7 @@ export default function Assets() {
                 <ProgressBar value={a.business_criticality} color={riskColor(a.business_criticality)} label="Business Criticality" />
               </div>
               <div style={{ marginTop: 10 }}>
-                <ProgressBar value={a.control_effectiveness} color="#06b6d4" label="Control Effectiveness" />
+                <ProgressBar value={a.control_effectiveness} color={TOKENS.secondaryBlue} label="Control Effectiveness" />
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 14 }}>
@@ -172,7 +172,7 @@ export default function Assets() {
               </div>
 
               {expanded && (
-                <div style={{ marginTop: 20, borderTop: '1px solid var(--bg-border)', paddingTop: 16 }}>
+                <div style={{ marginTop: 20, borderTop: '1px solid var(--color-divider)', paddingTop: 16 }}>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
                     <div>
                       <div className="card-title">Asset Details</div>
@@ -205,9 +205,9 @@ export default function Assets() {
                       <div className="card-title">Control Posture</div>
                       {a.controls && (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                          <ProgressBar value={a.controls.mfa_pct} label="MFA Coverage" color="#2563eb" />
-                          <ProgressBar value={a.controls.edr_pct} label="EDR Coverage" color="#06b6d4" />
-                          <ProgressBar value={a.controls.patching_pct} label="Patching" color="#7c3aed" />
+                          <ProgressBar value={a.controls.mfa_pct} label="MFA Coverage" color={TOKENS.primaryBlue} />
+                          <ProgressBar value={a.controls.edr_pct} label="EDR Coverage" color={TOKENS.secondaryBlue} />
+                          <ProgressBar value={a.controls.patching_pct} label="Patching" color={TOKENS.primaryDark} />
                           <div style={{ display: 'flex', gap: 16, fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                             <span>
                               WAF:{' '}

@@ -22,7 +22,7 @@ export default function Modal({ open, onClose, children, width = 460 }: Props) {
 
   return (
     <div
-      style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 400, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      style={{ position: 'fixed', inset: 0, background: 'var(--overlay-color)', zIndex: 400, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -33,12 +33,12 @@ export default function Modal({ open, onClose, children, width = 460 }: Props) {
         style={{
           width,
           maxWidth: '92vw',
-          background: 'var(--bg-surface)',
-          border: '1px solid var(--bg-border)',
-          borderRadius: 10,
-          boxShadow: '0 24px 64px rgba(0,0,0,0.55)',
-          padding: 22,
-          animation: 'command-in 0.15s ease',
+          background: 'var(--color-bg)',
+          border: '1px solid var(--color-border)',
+          borderRadius: 'var(--radius-lg)',
+          boxShadow: 'var(--shadow-lg)',
+          padding: 24,
+          animation: 'command-in var(--motion-base) var(--ease-standard)',
         }}
       >
         {children}

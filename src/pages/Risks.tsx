@@ -31,10 +31,10 @@ export default function Risks() {
   const filtered = filter === 'ALL' ? sorted : sorted.filter((r) => bucketOf(r.risk_score) === filter);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div className="page-container page-stack">
+      <div className="animate-in" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, color: 'var(--text-primary)' }}>Risk Case Explorer</h1>
+          <h1 className="page-title">Risk Case Explorer</h1>
           <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
             Correlated, business-quantified risk cases sorted by financial exposure
           </p>

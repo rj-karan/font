@@ -28,8 +28,8 @@ export default function ToastHost() {
             <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
               <Icon size={16} color={COLOR[t.kind]} style={{ flexShrink: 0, marginTop: 1 }} />
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: '0.8125rem', fontWeight: 700, color: 'var(--text-primary)' }}>{t.title}</div>
-                {t.description && <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: 2 }}>{t.description}</div>}
+                <div style={{ fontSize: '0.8125rem', fontWeight: 500, color: 'var(--color-text-primary)' }}>{t.title}</div>
+                {t.description && <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)', marginTop: 2 }}>{t.description}</div>}
               </div>
               <button className="icon-btn" style={{ width: 22, height: 22 }} onClick={() => dismissToast(t.id)} aria-label="Dismiss notification">
                 <X size={13} />

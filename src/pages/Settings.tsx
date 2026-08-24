@@ -13,10 +13,10 @@ export default function Settings() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20, maxWidth: 720 }}>
-      <div>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <SettingsIcon size={22} color="var(--accent-blue)" /> Settings
+    <div className="page-container page-stack" style={{ maxWidth: 760 }}>
+      <div className="animate-in">
+        <h1 className="page-title" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <SettingsIcon size={22} color="var(--color-primary-blue)" /> Settings
         </h1>
         <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
           Workspace, data source, and notification preferences

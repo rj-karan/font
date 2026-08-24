@@ -5,6 +5,7 @@ import FilterBar from '../components/common/FilterBar';
 import SeverityBadge from '../components/common/SeverityBadge';
 import KPICard from '../components/common/KPICard';
 import { MOCK_FINDINGS } from '../utils/mock';
+import { TOKENS } from '../utils/format';
 
 const THREAT_FINDINGS = MOCK_FINDINGS.filter((f) => f.source_type === 'THREAT_INTEL');
 
@@ -32,10 +33,10 @@ export default function ThreatIntelligence() {
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <div>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <Radar size={22} color="var(--sev-critical)" /> Threat Intelligence
+    <div className="page-container page-stack">
+      <div className="animate-in">
+        <h1 className="page-title" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <Radar size={22} color="var(--color-primary-blue)" /> Threat Intelligence
         </h1>
         <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
           Active threat actor tracking and campaign correlation from MISP feeds
@@ -43,10 +44,10 @@ export default function ThreatIntelligence() {
       </div>
 
       <div className="responsive-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
-        <KPICard title="Tracked Threat Actors" value={String(THREAT_ACTORS.length)} accentColor="#ef4444" icon={<Radar size={16} />} />
-        <KPICard title="Active Campaigns" value="2" accentColor="#f97316" icon={<Radar size={16} />} />
-        <KPICard title="Actively Exploited CVEs" value="2" accentColor="#ef4444" icon={<Radar size={16} />} />
-        <KPICard title="Intel Feeds Connected" value="1 / 2" accentColor="#06b6d4" icon={<Radar size={16} />} />
+        <KPICard title="Tracked Threat Actors" value={String(THREAT_ACTORS.length)} accentColor={TOKENS.critical} icon={<Radar size={16} />} />
+        <KPICard title="Active Campaigns" value="2" accentColor={TOKENS.sevHigh} icon={<Radar size={16} />} />
+        <KPICard title="Actively Exploited CVEs" value="2" accentColor={TOKENS.critical} icon={<Radar size={16} />} />
+        <KPICard title="Intel Feeds Connected" value="1 / 2" accentColor={TOKENS.secondaryBlue} icon={<Radar size={16} />} />
       </div>
 
       <div className="card">

@@ -63,9 +63,9 @@ export default function Scenarios() {
   const diffGood = diff < 0;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <div>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, color: 'var(--text-primary)' }}>What-If Scenario Simulator</h1>
+    <div className="page-container page-stack">
+      <div className="animate-in">
+        <h1 className="page-title">What-If Scenario Simulator</h1>
         <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
           Model the financial impact of security investments before you make them
         </p>

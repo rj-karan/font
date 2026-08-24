@@ -2,7 +2,7 @@ import { useRef, useState, useCallback } from 'react';
 import { ZoomIn, ZoomOut, Maximize2 } from 'lucide-react';
 import type { AttackPath, AttackPathNode } from '../../types';
 import { ATTACK_NODE_ICON } from '../../config/icons';
-import { severityColor } from '../../utils/format';
+import { severityColor, TOKENS } from '../../utils/format';
 
 interface Props {
   path: AttackPath;
@@ -58,7 +58,15 @@ export default function AttackPathGraph({ path, height = 320, selectedNodeId, on
   }
 
   return (
-    <div style={{ position: 'relative', border: '1px solid var(--bg-border)', borderRadius: 8, overflow: 'hidden', background: 'var(--bg-base)' }}>
+    <div
+      style={{
+        position: 'relative',
+        border: '1px solid var(--color-border)',
+        borderRadius: 'var(--radius-md)',
+        overflow: 'hidden',
+        background: 'var(--color-bg-secondary)',
+      }}
+    >
       <div style={{ position: 'absolute', top: 8, right: 8, display: 'flex', gap: 4, zIndex: 5 }}>
         <button className="icon-btn" onClick={() => setZoom((z) => Math.min(2.2, z + 0.2))} aria-label="Zoom in" title="Zoom in">
           <ZoomIn size={13} />
@@ -83,10 +91,10 @@ export default function AttackPathGraph({ path, height = 320, selectedNodeId, on
         <g transform={`translate(${pan.x} ${pan.y}) scale(${zoom})`}>
           <defs>
             <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-              <path d="M0,0 L10,5 L0,10 Z" fill="#484f58" />
+              <path d="M0,0 L10,5 L0,10 Z" fill={TOKENS.textMuted} />
             </marker>
             <marker id="arrow-risky" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-              <path d="M0,0 L10,5 L0,10 Z" fill="#ef4444" />
+              <path d="M0,0 L10,5 L0,10 Z" fill={TOKENS.critical} />
             </marker>
           </defs>
 
@@ -108,12 +116,12 @@ export default function AttackPathGraph({ path, height = 320, selectedNodeId, on
                   y1={sy}
                   x2={tx}
                   y2={ty}
-                  stroke={edge.risky ? '#ef4444' : '#484f58'}
+                  stroke={edge.risky ? TOKENS.critical : TOKENS.border}
                   strokeWidth={edge.risky ? 2 : 1.4}
                   markerEnd={edge.risky ? 'url(#arrow-risky)' : 'url(#arrow)'}
                 />
                 {edge.label && (
-                  <text x={midX} y={midY - 6} fontSize={9.5} fill={edge.risky ? '#ef4444' : '#8b949e'} textAnchor="middle" fontWeight={600}>
+                  <text x={midX} y={midY - 6} fontSize={9.5} fill={edge.risky ? TOKENS.critical : TOKENS.textMuted} textAnchor="middle" fontWeight={600}>
                     {edge.label}
                   </text>
                 )}
@@ -123,7 +131,7 @@ export default function AttackPathGraph({ path, height = 320, selectedNodeId, on
 
           {path.nodes.map((node) => {
             const Icon = ATTACK_NODE_ICON[node.type];
-            const color = node.severity ? severityColor(node.severity) : '#8b949e';
+            const color = node.severity ? severityColor(node.severity) : TOKENS.textMuted;
             const isSelected = selectedNodeId === node.id;
             const isHovered = hoveredId === node.id;
             const dim = (hoveredId || selectedNodeId) && !highlightedNodeIds.has(node.id);
@@ -142,15 +150,15 @@ export default function AttackPathGraph({ path, height = 320, selectedNodeId, on
               >
                 <circle
                   r={NODE_R}
-                  fill="var(--bg-surface)"
+                  fill={TOKENS.bg}
                   stroke={color}
                   strokeWidth={isSelected || isHovered ? 3 : 2}
-                  style={{ filter: isSelected ? `drop-shadow(0 0 6px ${color})` : undefined }}
+                  style={{ filter: isSelected ? 'drop-shadow(0 2px 6px rgba(60,64,67,0.3))' : 'drop-shadow(0 1px 2px rgba(60,64,67,0.15))' }}
                 />
                 <g transform={`translate(${-9} ${-9})`}>
                   <Icon size={18} color={color} />
                 </g>
-                <text y={NODE_R + 16} textAnchor="middle" fontSize={11} fontWeight={600} fill="var(--text-primary)">
+                <text y={NODE_R + 16} textAnchor="middle" fontSize={11} fontWeight={500} fill={TOKENS.textPrimary}>
                   {node.label}
                 </text>
                 {node.severity && (
